@@ -1,0 +1,26 @@
+{
+  "name": "image-searcher",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fernandodelaconcha/image-searcher.git"
+  },
+  "author": "Fernando de la Concha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fernandodelaconcha/image-searcher/issues"
+  },
+  "homepage": "https://github.com/fernandodelaconcha/image-searcher#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cors": "^2.8.4",
+    "mongoose": "^4.11.4",
+    "node-bing-api": "^3.2.2",
+    "nodemon": "^1.11.0"
+  }
+}

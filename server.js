@@ -12,6 +12,11 @@ app.use(bodyParser.json());
 app.use(cors());
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/searchTerms')
 //GET CALL PARAMETERS
+app.get('api/recentsearchs', (req,res,next) => {
+	searchTerm.find({}, (err, data) => {
+		res.json(data);
+	});
+});
 
 app.get('/api/imagesearcher/:searchVal*', (req,res,next) =>{
 	var { searchVal } = req.params;
@@ -29,7 +34,35 @@ app.get('/api/imagesearcher/:searchVal*', (req,res,next) =>{
 		res.json(data);
 	});
 
-	//res.json({searchVal,offset});
+	//Offset
+	var searchOffset;
+
+	if(offset){
+		if (offset==1){
+			offset = 0;
+			searchOffset = 1;
+		}
+		else if (offset>1){
+			searchOffset = offset + 1;
+		}
+	}
+
+	Bing.images(searchTerm, {
+		top:(10 * searchOffset),
+		skip:(10 * offset)
+	}, function(error, rez, body){
+		var bingData = [];
+
+		for (var i=0;i<10; i++){
+			bingData.push({
+				url:body.value[i].webSearchUrl,
+				snippet: body.value[i].name,
+				thumbnail: body.value[i].thumbnailUrl,
+				context: body.value[i].hostPageDisplayUrl
+			})
+		}
+		res.json(bingData);
+	})
 });
 
 app.listen(process.env.PORT || 3000, ()=> {
